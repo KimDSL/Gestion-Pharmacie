@@ -44,7 +44,6 @@ public class Etagere {
 
         if (chercherMedicament(nomCommercial) == null) {
             System.out.println("Médicament " + nomCommercial + " non trouvé à l'étagère " + numero);
-            return;
         } else {
             medicaments.remove(chercherMedicament(nomCommercial));
             System.out.println("Médicament " + nomCommercial + " retiré de l'étagère " + numero);
