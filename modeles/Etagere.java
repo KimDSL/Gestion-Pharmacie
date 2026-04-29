@@ -1,13 +1,12 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Etagere {
     private int numero;
     private String typeTraitement;
     private ArrayList<Medicament> medicaments;
 
-    Scanner sc = new Scanner(System.in);
-    
+
     // Constructeur
     public Etagere(int numero, String typeTraitement) {
         this.numero = numero;
@@ -41,11 +40,11 @@ public class Etagere {
 
     // retirer médicament de l'étagère
     public void retirerMedicament(String nomCommercial) {
-
-        if (chercherMedicament(nomCommercial) == null) {
+        Medicament m = chercherMedicament(nomCommercial);
+        if (m == null) {
             System.out.println("Médicament " + nomCommercial + " non trouvé à l'étagère " + numero);
         } else {
-            medicaments.remove(chercherMedicament(nomCommercial));
+            medicaments.remove(m);
             System.out.println("Médicament " + nomCommercial + " retiré de l'étagère " + numero);
         }
     }

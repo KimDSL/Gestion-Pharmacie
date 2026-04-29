@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class LigneVente {
 
     // Attributs privés
@@ -12,24 +14,31 @@ public class LigneVente {
         this.sousTotal = m.getPrix() * qte;
     }
 
-    // Retourne le médicament
+    // Getters
     public Medicament getMedicament() {
         return medicament;
     }
 
-    // Retourne la quantité
     public int getQuantite() {
         return quantite;
     }
 
-    // Retourne le sous-total
     public double getSousTotal() {
         return sousTotal;
     }
 
-    // Afficher les informations
-    public void afficher() {
-        System.out.println("Nom : " + medicament.getNom());
+    // Modifier la quantité de la ligne de vente
+    public void modifierQuantite(int nouvelleQte) {
+        if (nouvelleQte > 0) {
+            this.quantite = nouvelleQte;
+            this.sousTotal = medicament.getPrix() * this.quantite;
+        } else {
+            System.out.println("La quantité doit être supérieure à 0.");
+        }
+    }
+    // Afficher les informations de la ligne de vente
+    public void afficherUneLigneAchat() {
+        System.out.println("Nom : " + medicament.getNomCommercial());
         System.out.println("Quantité : " + quantite);
         System.out.println("Sous-total : " + sousTotal + " FCFA");
     }
