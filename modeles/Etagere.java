@@ -1,84 +1,69 @@
 import java.util.ArrayList;
 
-
 public class Etagere {
-    private int numero;
+
+    // attributs
+    private int    numero;
     private String typeTraitement;
     private ArrayList<Medicament> medicaments;
 
-
-    // Constructeur
+    // constructeur
     public Etagere(int numero, String typeTraitement) {
-        this.numero = numero;
+        this.numero         = numero;
         this.typeTraitement = typeTraitement;
-        this.medicaments = new ArrayList<>();
+        this.medicaments    = new ArrayList<>();
     }
 
-    // Getters
-    public int getNumero() {
-        return numero;
+    // getters
+    public int    getNumero()        { return numero; }
+    public String getTypeTraitement() { return typeTraitement; }
+
+    // Retourne une copie de la liste des médicaments utilisée par Sauvegarde.java pour écrire dans le fichier
+    public ArrayList<Medicament> getMedicaments() {
+        return new ArrayList<>(medicaments);
     }
 
-    public String getTypeTraitement() {
-        return typeTraitement;
-    }
 
-    // Setters
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
-
-    public void setTypeTraitement(String typeTraitement) {
-        this.typeTraitement = typeTraitement;
-    }
-
-    // ajouter médicament à l'étagère
+    // ajouter un médicament à l'étagère avec message pour confirmer à l'utilisateur
     public void ajouterMedicament(Medicament m) {
         medicaments.add(m);
-        System.out.println("Médicament " + m.getNomCommercial() + " ajouté à l'étagère " + numero);
+        System.out.println(m.getNomCommercial() + " ajouté à l'étagère n°" + numero + ".");
     }
 
-    // retirer médicament de l'étagère
-    public void retirerMedicament(String nomCommercial) {
-        Medicament m = chercherMedicament(nomCommercial);
-        if (m == null) {
-            System.out.println("Médicament " + nomCommercial + " non trouvé à l'étagère " + numero);
+    // ajouter un médicament sans afficher de message utilisé par Sauvegarde.java
+    public void ajouterMedicamentSilencieux(Medicament m) {
+        medicaments.add(m);
+    }
+
+    // retirer un médicament de l'étagère
+    public void retirerMedicament(String nom) {
+        Medicament trouve = chercherMedicament(nom);
+        if (trouve != null) {
+            medicaments.remove(trouve);
+            System.out.println(nom + " retiré de l'étagère n°" + numero + ".");
         } else {
-            medicaments.remove(m);
-            System.out.println("Médicament " + nomCommercial + " retiré de l'étagère " + numero);
+            System.out.println("Médicament introuvable : " + nom);
         }
     }
 
-    // Chercher un médicament dans l'étagère
-    public Medicament chercherMedicament(String nomCommercial) {
-
+    // chercher un médicament
+    public Medicament chercherMedicament(String nom) {
         for (Medicament m : medicaments) {
-            if (m.getNomCommercial().equalsIgnoreCase(nomCommercial)) {
+            if (m.getNomCommercial().equalsIgnoreCase(nom)) {
                 return m;
             }
         }
-
         return null;
     }
-    
-    // Afficher un médicament de l'étagère
-    public void afficherMedicament(String nomCommercial) {
-        Medicament m = chercherMedicament(nomCommercial);
-        if (m != null) {
-            System.out.println("Médicament trouvé: \n " + m);
-        } else {
-            System.out.println("Médicament " + nomCommercial + " non trouvé à l'étagère " + numero);
-        }
-    }
 
-    // Afficher les médicaments de l'étagère
+    // afficher tous les médicaments de l'étagère
     public void afficherMedicaments() {
+        System.out.println("==== Étagère n°" + numero + " — " + typeTraitement + " ====");
         if (medicaments.isEmpty()) {
-            System.out.println("Aucun médicament dans l'étagère " + numero);
+            System.out.println("  (aucun médicament)");
         } else {
-            System.out.println("Médicaments dans l'étagère " + numero + ":");
             for (Medicament m : medicaments) {
-                System.out.println(m);
+                m.afficher();
             }
         }
     }
