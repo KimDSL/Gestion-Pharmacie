@@ -1,59 +1,60 @@
 import java.util.ArrayList;
-//classe client
+
 public class Client {
 
-    // Attributs privés
-    private int idClient;
+    // attributs
+    private int    idClient;
     private String dateHeure;
     private double prixTotal;
     private ArrayList<LigneVente> achats;
 
-    // Constructeur
-    public Client(int id, String dateHeure) {
-        this.idClient = id;
+    // constructeur
+    public Client(int idClient, String dateHeure) {
+        this.idClient  = idClient;
         this.dateHeure = dateHeure;
         this.prixTotal = 0.0;
-        this.achats = new ArrayList<>();
+        this.achats    = new ArrayList<>();
     }
 
-    // Getter idClient
-    public int getIdClient() {
-        return idClient;
+    // getters
+    public int    getIdClient()  { return idClient; }
+    public String getDateHeure() { return dateHeure; }
+    public double getPrixTotal() { return prixTotal; }
+
+    // Retourne une copie de la liste des achats utilisée par Sauvegarde.java pour écrire dans le fichier
+    public ArrayList<LigneVente> getAchats() {
+        return new ArrayList<>(achats);
     }
 
-    // Getter prixTotal
-    public double getPrixTotal() {
-        return prixTotal;
-    }
-
-    // Ajouter un achat
+    // Ajoute une ligne de vente à la liste des achats du client et recalculer le total
     public void ajouterAchat(LigneVente lv) {
         achats.add(lv);
-        calculerTotal(); // mise à jour automatique
+        calculerTotal();
     }
 
-    // Calculer le total
+    // Recalcule le prix total en sommant tous les sous-totaux
     public void calculerTotal() {
         prixTotal = 0.0;
-
         for (LigneVente lv : achats) {
             prixTotal += lv.getSousTotal();
         }
     }
 
-    // Afficher le reçu complet
+    // Affiche le récapitulatif complet de l'achat (reçu)
     public void afficherRecu() {
-        System.out.println("===== RECU CLIENT =====");
-        System.out.println("ID Client : " + idClient);
-        System.out.println("Date/Heure : " + dateHeure);
-        System.out.println("-----------------------");
-
-        for (LigneVente lv : achats) {
-            System.out.println(lv);
+        System.out.println("");
+        System.out.println("          REÇU — CLIENT n°" + idClient);
+        System.out.println("  Date/Heure : " + dateHeure);
+        System.out.println("");
+        if (achats.isEmpty()) {
+            System.out.println("  (aucun achat enregistré)");
+        } else {
+            for (LigneVente lv : achats) {
+                lv.afficher();
+            }
         }
-
-        System.out.println("-----------------------");
-        System.out.println("TOTAL A PAYER : " + prixTotal + " FCFA");
-        System.out.println("=======================");
+        System.out.println("");
+        System.out.println("  TOTAL      : " + prixTotal + " FCFA");
+        System.out.println("");
     }
 }
