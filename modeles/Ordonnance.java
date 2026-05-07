@@ -45,9 +45,9 @@ public class Ordonnance {
         if (lignes.isEmpty()) {
             System.out.println("  (aucune ligne)");
         } else {
-        for (LigneOrdonnance lo : lignes) {
-            lo.afficher();
-        }
+            for (LigneOrdonnance lo : lignes) {
+                lo.afficher();
+            }
         }
         System.out.println("");
     }
