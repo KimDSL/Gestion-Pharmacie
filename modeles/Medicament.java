@@ -1,66 +1,72 @@
 public class Medicament {
-    private String nomCommercial;
-    private String forme;
-    private double prix;
-    private int stock;
 
-    public Medicament(String nomCommercial, String forme, double prix, int stock) {
-        this.nomCommercial = nomCommercial;
-        this.forme = forme;
-        this.prix = prix;
-        this.stock = stock;
+    // Attributs
+    private int    numEtagere;
+    private String nomCommercial;
+    private String formeGalenique;
+    private double prix;
+    private String listeMedicament;
+    private int    quantiteDisponible;
+
+    // Constructeur
+    public Medicament(int numEtagere, String nomCommercial, String formeGalenique,
+                      double prix, String listeMedicament, int quantiteDisponible) {
+        this.numEtagere         = numEtagere;
+        this.nomCommercial      = nomCommercial;
+        this.formeGalenique     = formeGalenique;
+        this.prix               = prix;
+        this.listeMedicament    = listeMedicament;
+        this.quantiteDisponible = quantiteDisponible;
     }
 
     // Getters
-    public String getNomCommercial() {
-        return nomCommercial;
-    }
-
-    public String getForme() {
-        return forme;
-    }
-
-    public double getPrix() {
-        return prix;
-    }
-
-    public int getStock() {
-        return stock;
-    }
+    public int    getNumEtagere() { return numEtagere; }
+    public String getNomCommercial() { return nomCommercial; }
+    public String getFormeGalenique() { return formeGalenique; }
+    public double getPrix() { return prix; }
+    public String getListeMedicament() { return listeMedicament; }
+    public int    getQuantiteDisponible() { return quantiteDisponible; }
 
     // Setters
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public void setNumEtagere(int numEtagere) { this.numEtagere = numEtagere; }
+    public void setNomCommercial(String nomCommercial) { this.nomCommercial = nomCommercial; }
+    public void setFormeGalenique(String formeGalenique) { this.formeGalenique = formeGalenique; }
+    public void setPrix(double prix) { this.prix = prix; }
+    public void setListeMedicament(String listeMedicament) { this.listeMedicament = listeMedicament; }
+    public void setQuantiteDisponible(int quantiteDisponible) { this.quantiteDisponible = quantiteDisponible; }
+
+    
+    // Retourne true si le médicament est en stock.
+
+    public boolean estDisponible() {
+        return quantiteDisponible > 0;
     }
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    // Savoir si le médicament est disponible selon une quantité demandée
-    public boolean estDispo(int quantiteDemandee) {
-        return this.stock >= quantiteDemandee;
-    }
-
-    // Diminuer le stock (par exemple lors d'une vente)
-    public void diminuerStock(int quantite) {
-        if (estDispo(quantite)) {
-            this.stock -= quantite;
-        } else {
-            System.out.println("Stock insuffisant pour " + nomCommercial + ". Stock actuel : " + this.stock);
+    // diminue le stock du médicament de la quantité spécifiée, avec vérification de la validité de la quantité et du stock disponible
+    public void diminuerStock(int q) {
+        if (q <= 0) {
+            System.out.println("Erreur : la quantité doit être positive.");
+            return;
         }
-    }
-
-    // Ajouter au stock (par exemple lors d'une livraison)
-    public void ajouterStock(int quantite) {
-        if (quantite > 0) {
-            this.stock += quantite;
+        if (q > quantiteDisponible) {
+            System.out.println("Erreur : stock insuffisant pour " + nomCommercial
+                    + " (disponible : " + quantiteDisponible + ", demandé : " + q + ")");
+            return;
         }
+        quantiteDisponible -= q;
+        System.out.println("Stock mis à jour : " + nomCommercial
+                + " → " + quantiteDisponible + " restant(s).");
     }
 
-    // Affichage personnalisé pour le médicament
-    @Override
-    public String toString() {
-        return nomCommercial + " (" + forme + ") - Prix: " + prix + " FCFA | Stock: " + stock;
+    // Affiche les détails du médicament
+    public void afficher() {
+        System.out.println("");
+        System.out.println("Médicament      : " + nomCommercial);
+        System.out.println("Forme galénique : " + formeGalenique);
+        System.out.println("Prix            : " + prix + " FCFA");
+        System.out.println("Stock           : " + quantiteDisponible);
+        System.out.println("Liste           : " + listeMedicament);
+        System.out.println("Étagère n°      : " + numEtagere);
+        System.out.println("");
     }
 }

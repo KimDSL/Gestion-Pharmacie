@@ -58,7 +58,7 @@ public class Etagere {
 
     // afficher tous les médicaments de l'étagère
     public void afficherMedicaments() {
-        System.out.println("==== Étagère n°" + numero + " — " + typeTraitement + " ====");
+        System.out.println("--- Étagère N°" + numero + " : " + typeTraitement + " ---");
         if (medicaments.isEmpty()) {
             System.out.println("  (aucun médicament)");
         } else {
